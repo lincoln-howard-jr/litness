@@ -56,10 +56,11 @@ export default function useLocation ():LocationHook {
     setLocationAvailable (true);
   }
 
-  const error = () => {
+  const error = (e: any) => {
     setLocationAvailable (false);
     setLat (null);
     setLng (null);
+    console.log ('#watch position error', e);
   }
 
   const init = () => {
