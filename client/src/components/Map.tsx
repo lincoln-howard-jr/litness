@@ -29,7 +29,7 @@ export default function Map () {
   const app = useApp ();
   const mapref = useRef<HTMLDivElement> (null);
   const [map, setMap] = useState<OlMap | null> (null);
-  const [zoom, setZoom] = useState <number> (15);
+  const [zoom, setZoom] = useState <number> (16);
   const [center, setCenter] = useState<number[] | null> (null);
 
   useEffect (() => {
