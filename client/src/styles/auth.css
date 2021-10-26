@@ -1,0 +1,52 @@
+.auth-conatiner {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  row-gap: 1rem;
+  padding: 2rem;
+  width: 84vw;
+  max-width: 60ch;
+  margin: 10vh auto;
+  background-color: hsla(0, 0%, 100%, 0.6);
+  border-radius: .5rem;
+  border-bottom: 0.25rem solid hsla(0, 0%, 100%, 0.1);
+  border-right: 0.25rem solid hsla(0, 0%, 100%, 0.1);
+  border-top: 0.25rem solid hsla(0, 0%, 100%, 0.8);
+  border-left: 0.25rem solid hsla(0, 0%, 100%, 0.8);
+}
+.auth-conatiner input {
+  font-size: 0.95rem;
+  height: 1.75rem;
+  width: 18ch;
+  padding: 0.25rem 2ch;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.125rem solid hsla(193, 46%, 77%, 1);
+}
+.auth-conatiner button {
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.25rem 2ch;
+  margin-block: 0.5rem;
+  background-color: hsla(193, 46%, 77%, 0.3);
+  border: 0.025rem solid hsla(193, 77%, 5%, 1);
+  border-radius: 0.25rem;
+}
+@media (hover: hover) {
+  .auth-conatiner button {
+    transition: 0.3s;
+  }
+  .auth-conatiner button:hover {
+    font-weight: 600;
+    color: hsla(193, 46%, 77%, 1);
+    background-color: hsla(193, 77%, 5%, 1);
+  }
+}
+@media (hover: none) {
+  .auth-conatiner button:active {
+    font-weight: 600;
+    color: hsla(193, 46%, 77%, 1);
+    background-color: hsla(193, 77%, 5%, 1);
+  }
+}
