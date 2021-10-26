@@ -64,13 +64,13 @@ export default function useLocation ():LocationHook {
   }
 
   const init = () => {
-    let wid = window.navigator.geolocation.watchPosition (success, error, {
+    let wid = window.navigator.geolocation.getCurrentPosition (success, error, {
       enableHighAccuracy: true,
       timeout: 1000
     });
-    return () => {
-      window.navigator.geolocation.clearWatch (wid);
-    }
+    // return () => {
+    //   window.navigator.geolocation.clearWatch (wid);
+    // }
   }
 
   useEffect (init, []);
