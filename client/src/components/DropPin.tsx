@@ -8,6 +8,17 @@ export default function DropPin () {
   const [dropping, setDropping] = useState<boolean> (false);
   const [loading, setLoading] = useState <boolean> (false);
   const [litness, setLitness] = useState<number> (0);
+  
+  const finish = async (placeName: string, placeAddress:string) => {
+    try {
+      setDropping (false);
+      setLoading (false);
+      setLitness (0);
+      await app.pins.createPin (litness, placeName, placeAddress);
+    } catch (e: any) {
+      alert (e?.toString () || 'error while creating pin');
+    }
+  }
 
   const startDropping = (litness: number) => async () => {
     try {
@@ -21,7 +32,7 @@ export default function DropPin () {
   }
 
   if (!app.user.isAuthenticated || !app.location.locationAvailable) return null;
-  if (app.location.places) return (
+  if (app.location.places && litness > 0) return (
     <div className="drop-pin-backdrop">
       <div className="drop-pin place-list">
         <header>
@@ -29,7 +40,7 @@ export default function DropPin () {
         </header>
         {
           app.location.places.map ((place:any) => (
-            <div className="drop-pin place">
+            <div onClick={() => finish (place.attributes.PlaceName, place.attributes.Place_addr)} className="drop-pin place">
               <h3>{place.attributes.PlaceName}</h3>
             </div>
           ))

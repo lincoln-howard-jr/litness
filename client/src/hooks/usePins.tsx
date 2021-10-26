@@ -31,7 +31,7 @@ export interface PinsHook {
   featureSet: PointFeatureSet;
   pinErr: null | string;
   getPins: () => void;
-  createPin: (litness: number) => Promise<void>;
+  createPin: (litness: number, placeName: string, placeAddress: string) => Promise<void>;
 }
 
 export const mockUsePins:PinsHook = {
@@ -76,12 +76,14 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
       setError (e?.toString () || 'unknown server error');
     }
   }
-  const createPin = (litness: number) => new Promise<void> (async (resolve, reject) => {
+  const createPin = (litness: number, placeName: string, placeAddress: string) => new Promise<void> (async (resolve, reject) => {
     let unfreeze = freeze ();
     try {
       let body = {
         ...location.coords,
-        litness
+        litness,
+        placeName,
+        placeAddress
       }
       fetch ('https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/pins', {
         method: 'post',
