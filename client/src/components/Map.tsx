@@ -13,7 +13,7 @@ import CircleStyle from "ol/style/Circle";
 
 const style = (feature: any) => new Style ({
   image: new CircleStyle ({
-    radius: 8,
+    radius: parseInt (feature.get ('litness')) * 2,
     fill: new Fill ({
       color: [
         255,
