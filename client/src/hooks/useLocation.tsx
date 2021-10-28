@@ -37,7 +37,7 @@ export default function useLocation ():LocationHook {
           category: 'Arts and Entertainment,Coffee Shop,Nightlife Spot,Parks and Outdoors',
           location: `${lng},${lat}`,
           distance: 2000,
-          maxLocations: 6
+          maxLocations: 15
         },
         outFields: '*',
         authentication
@@ -64,13 +64,13 @@ export default function useLocation ():LocationHook {
   }
 
   const init = () => {
-    let wid = window.navigator.geolocation.getCurrentPosition (success, error, {
+    let wid = window.navigator.geolocation.watchPosition (success, error, {
       enableHighAccuracy: true,
-      timeout: 1000
+      timeout: 3000
     });
-    // return () => {
-    //   window.navigator.geolocation.clearWatch (wid);
-    // }
+    return () => {
+      window.navigator.geolocation.clearWatch (wid);
+    }
   }
 
   useEffect (init, []);

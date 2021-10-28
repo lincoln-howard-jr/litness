@@ -10,5 +10,13 @@ export default [
   {
     name: 'Fire',
     attribution: '<div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>'
+  },
+  {
+    name: 'Cancel',
+    attribution: '<div>Icons made by <a href="https://www.flaticon.com/authors/verry-purnomo" title="verry purnomo">verry purnomo</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>'
+  },
+  {
+    name: 'Caret',
+    attribution: '<div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>'
   }
 ]

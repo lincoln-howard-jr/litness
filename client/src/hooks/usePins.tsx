@@ -112,13 +112,15 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
         placeName,
         placeAddress
       }
-      fetch ('https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/pins', {
+      await fetch ('https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/pins', {
         method: 'post',
         headers: user.headers.post,
         body: JSON.stringify (body)
       })
+      resolve ();
     } catch (e: any) {
       setError (e?.toString () || 'unknown error');
+      reject (e);
     } finally {
       unfreeze ();
     }
