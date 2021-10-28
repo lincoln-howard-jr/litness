@@ -34,10 +34,10 @@ export default function useLocation ():LocationHook {
     try {
       let response = await arcgis.geocode ({
         params: {
-          category: 'Arts and Entertainment,Coffee Shop,Nightlife Spot,Parks and Outdoors',
+          category: 'Coffee Shop,Nightlife Spot',
           location: `${lng},${lat}`,
-          distance: 2000,
-          maxLocations: 15
+          distance: 250,
+          maxLocations: 5
         },
         outFields: '*',
         authentication

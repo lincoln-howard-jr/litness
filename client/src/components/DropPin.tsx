@@ -1,6 +1,6 @@
-import { MouseEvent, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useApp } from "../AppProvider";
-import { cancel, caret, fire, pin } from "../img";
+import { cancel, caret, fire, pen, pin } from "../img";
 
 export default function DropPin () {
   const app = useApp ();
@@ -10,6 +10,7 @@ export default function DropPin () {
   const [loading, setLoading] = useState <boolean> (false);
   const [litness, setLitness] = useState<number> (0);
   const [placeIndex, setPlaceIndex] = useState (0);
+  const [customLocation, setCustomLocation] = useState<string> ('');
   const [selecting, setSelecting] = useState<boolean> (false);
 
   const reset = () => {
@@ -26,7 +27,8 @@ export default function DropPin () {
 
   const finish = async () => {
     try {
-      await app.pins.createPin (litness, app.location.places [placeIndex].attributes.PlaceName, app.location.places [placeIndex].attributes.Place_addr);
+      if (placeIndex !== -1) await app.pins.createPin (litness, app.location.places [placeIndex].attributes.PlaceName, app.location.places [placeIndex].attributes.Place_addr);
+      else await app.pins.createPin (litness, customLocation, 'unknown');
     } catch (e: any) {
       alert (e?.toString () || 'error while creating pin');
     } finally {
@@ -45,6 +47,10 @@ export default function DropPin () {
     }
   }
 
+  useEffect (() => {
+    if (customLocation.length > 0) setPlaceIndex (-1);
+  }, [selecting])
+
   if (!app.user.isAuthenticated || !app.location.locationAvailable) return null;
   if (app.location.places && litness > 0) return (
     <div className="drop-pin-backdrop">
@@ -57,7 +63,10 @@ export default function DropPin () {
         </header>
         <button onClick={finish}>That's It!</button>
         <div onClick={() => setSelecting (!selecting)} className={selecting ? "select open" : "select"}>
-          <h3>{app.location.places [placeIndex].attributes.PlaceName}</h3>
+          <h3>
+            {placeIndex !== -1 && app.location.places [placeIndex].attributes.PlaceName}
+            {placeIndex === -1 && customLocation}
+          </h3>
           <span>
             <img src={caret} />
           </span>
@@ -67,9 +76,19 @@ export default function DropPin () {
             app.location.places.map ((place:any, i: number) => i !== placeIndex && (
               <div onClick={() => {setPlaceIndex (i); setSelecting (false)}} className="select-option">
                 <h3>{place.attributes.PlaceName}</h3>
+                <address>{place.attributes.Place_addr}</address>
               </div>
             ))
           }
+          <hr />
+          <div className="select-dropdown-custom-place">
+            <label>
+              <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
+              <span>
+                <img src={pen} />
+              </span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -77,30 +96,28 @@ export default function DropPin () {
   if (loading) return (
     <div className="drop-pin-backdrop">
       <div className="drop-pin place-list">
-        <div className="drop-pin place placeholder">
-          <header>
-            <h2>...</h2>
-          </header>
+          <div onClick={reset} className="exit">
+            <img src={cancel} />
+          </div>
+        <header>
+          <h1>Select current location:</h1>
+        </header>
+        <button onClick={finish}>That's It!</button>
+        <div onClick={() => setSelecting (!selecting)} className={selecting ? "select open" : "select"}>
+          <h3>...</h3>
+          <span>
+            <img src={caret} />
+          </span>
         </div>
-        <div className="drop-pin place placeholder">
-          <header>
-            <h2>...</h2>
-          </header>
-        </div>
-        <div className="drop-pin place placeholder">
-          <header>
-            <h2>...</h2>
-          </header>
-        </div>
-        <div className="drop-pin place placeholder">
-          <header>
-            <h2>...</h2>
-          </header>
-        </div>
-        <div className="drop-pin place placeholder">
-          <header>
-            <h2>...</h2>
-          </header>
+        <div className="select-dropdown">
+          <div className="select-dropdown-custom-place">
+            <label>
+              <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
+              <span>
+                <img src={pen} />
+              </span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
