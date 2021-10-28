@@ -5,7 +5,8 @@ import { LocationHook } from "./useLocation";
 import { UserHook } from "./useUser";
 
 interface Distribution {
-  [key: string]: number;
+  name: string;
+  percent: number;
 }
 
 interface Pin {
@@ -35,7 +36,7 @@ export interface PinsHook {
   iter: number;
   pins: Pin[];
   featureSet: PointFeatureSet;
-  distribution: Distribution;
+  distribution: Distribution[];
   pinErr: null | string;
   getPins: () => void;
   createPin: (litness: number, placeName: string, placeAddress: string) => Promise<void>;
@@ -48,7 +49,7 @@ export const mockUsePins:PinsHook = {
     type: 'FeatureCollection',
     features: []
   },
-  distribution: {},
+  distribution: [],
   pinErr: null,
   getPins: () => {},
   createPin: ()=>new Promise (r => r)
@@ -58,7 +59,7 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
   const [iter, setIter] = useState<number> (mockUsePins.iter);
   const [pins, setPins] = useState<Pin[]> (mockUsePins.pins);
   const [featureSet, setFeatureSet] = useState<PointFeatureSet> (mockUsePins.featureSet)
-  const [distribution, setDistribution] = useState<Distribution> ({});
+  const [distribution, setDistribution] = useState<Distribution[]> ([]);
   const [pinErr, setError] = useState<null | string> (mockUsePins.pinErr);
   const getPins = async () => {
     try {
@@ -67,21 +68,17 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
       let total = data.reduce ((acc, val) => {
         return acc + val.litness;
       }, 0);
-      let addresses = data.reduce<string[]> ((acc, val) => {
-        if (acc.includes (val.placeAddress)) return acc;
-        return [...acc, val.placeAddress];
+      let byName = data.reduce<string[]> ((acc, val) => {
+        if (acc.includes (val.placeName)) return acc;
+        return [...acc, val.placeName];
       }, []);
-      let ranks = addresses.map (addy => data.filter (pin => pin.placeAddress === addy)).map (list => {
+      let ranks = byName.map (name => data.filter (pin => pin.placeName === name)).map (list => {
         return list.reduce ((acc, val) => {
           return acc + val.litness;
         }, 0) / total;
       });
-      let dist = addresses.reduce ((acc, val, i) => {
-        return {
-          ...acc,
-          [val]: ranks [i]
-        }
-      }, {});
+      let dist = byName.map ((name, i) => ({name, percent: ranks [i]}))
+      dist.sort ((a, b) => a.percent - b.percent);
       setDistribution (dist);
       const geoJson:PointFeatureSet = {
         type: 'FeatureCollection',

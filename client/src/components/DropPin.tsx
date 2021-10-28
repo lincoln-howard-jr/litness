@@ -1,34 +1,27 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useApp } from "../AppProvider";
-import { cancel, caret, fire, pen, pin } from "../img";
+import { cancel, caret, fire, pen, pin, plus } from "../img";
 
 export default function DropPin () {
   const app = useApp ();
 
   const ref = useRef<HTMLDivElement> (null);
   const [dropping, setDropping] = useState<boolean> (false);
-  const [loading, setLoading] = useState <boolean> (false);
   const [litness, setLitness] = useState<number> (0);
-  const [placeIndex, setPlaceIndex] = useState (0);
   const [customLocation, setCustomLocation] = useState<string> ('');
-  const [selecting, setSelecting] = useState<boolean> (false);
 
   const reset = () => {
     setDropping (false);
-    setLoading (false);
     setLitness (0);
-    setPlaceIndex (0);
-    setSelecting (false);
   }
 
   const exit = (e:MouseEvent<HTMLDivElement> | null) => {
     if (!e || e.target === ref.current) reset ();
   }
 
-  const finish = async () => {
+  const finish = async (name: string, addy: string) => {
     try {
-      if (placeIndex !== -1) await app.pins.createPin (litness, app.location.places [placeIndex].attributes.PlaceName, app.location.places [placeIndex].attributes.Place_addr);
-      else await app.pins.createPin (litness, customLocation, 'unknown');
+      await app.pins.createPin (litness, name, addy);
     } catch (e: any) {
       alert (e?.toString () || 'error while creating pin');
     } finally {
@@ -38,7 +31,6 @@ export default function DropPin () {
 
   const startDropping = (litness: number) => async () => {
     try {
-      setLoading (true);
       setDropping (false);
       setLitness (litness)
       await app.location.getPlaces ();
@@ -47,12 +39,8 @@ export default function DropPin () {
     }
   }
 
-  useEffect (() => {
-    if (customLocation.length > 0) setPlaceIndex (-1);
-  }, [selecting])
-
   if (!app.user.isAuthenticated || !app.location.locationAvailable) return null;
-  if (app.location.places && litness > 0) return (
+  if (litness > 0) return (
     <div className="drop-pin-backdrop">
       <div className="drop-pin place-list">
           <div onClick={reset} className="exit">
@@ -61,20 +49,10 @@ export default function DropPin () {
         <header>
           <h1>Select current location:</h1>
         </header>
-        <button onClick={finish}>That's It!</button>
-        <div onClick={() => setSelecting (!selecting)} className={selecting ? "select open" : "select"}>
-          <h3>
-            {placeIndex !== -1 && app.location.places [placeIndex].attributes.PlaceName}
-            {placeIndex === -1 && customLocation}
-          </h3>
-          <span>
-            <img src={caret} />
-          </span>
-        </div>
         <div className="select-dropdown">
           {
-            app.location.places.map ((place:any, i: number) => i !== placeIndex && (
-              <div onClick={() => {setPlaceIndex (i); setSelecting (false)}} className="select-option">
+            app.location.places.map ((place: any) => (
+              <div onClick={() => {finish (place.attributes.PlaceName, place.attributes.Place_addr)}} className="select-option">
                 <h3>{place.attributes.PlaceName}</h3>
                 <address>{place.attributes.Place_addr}</address>
               </div>
@@ -84,37 +62,8 @@ export default function DropPin () {
           <div className="select-dropdown-custom-place">
             <label>
               <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
-              <span>
-                <img src={pen} />
-              </span>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-  if (loading) return (
-    <div className="drop-pin-backdrop">
-      <div className="drop-pin place-list">
-          <div onClick={reset} className="exit">
-            <img src={cancel} />
-          </div>
-        <header>
-          <h1>Select current location:</h1>
-        </header>
-        <button onClick={finish}>That's It!</button>
-        <div onClick={() => setSelecting (!selecting)} className={selecting ? "select open" : "select"}>
-          <h3>...</h3>
-          <span>
-            <img src={caret} />
-          </span>
-        </div>
-        <div className="select-dropdown">
-          <div className="select-dropdown-custom-place">
-            <label>
-              <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
-              <span>
-                <img src={pen} />
+              <span onClick={() => {finish (customLocation, 'unknown')}}>
+                <img src={plus} />
               </span>
             </label>
           </div>

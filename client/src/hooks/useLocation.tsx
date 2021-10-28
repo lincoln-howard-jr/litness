@@ -26,7 +26,7 @@ export const mockUseLocation:LocationHook = {
 }
 export default function useLocation ():LocationHook {
   const [locationAvailable, setLocationAvailable] = useState<boolean> (false);
-  const [places, setPlaces] = useState<any> (null);
+  const [places, setPlaces] = useState<any []> ([]);
   const [lat, setLat] = useState<number | null> (null);
   const [lng, setLng] = useState<number | null> (null);
 
@@ -34,9 +34,9 @@ export default function useLocation ():LocationHook {
     try {
       let response = await arcgis.geocode ({
         params: {
-          category: 'Coffee Shop,Nightlife Spot',
+          category: 'Nightlife Spot',
           location: `${lng},${lat}`,
-          distance: 250,
+          distance: 25,
           maxLocations: 5
         },
         outFields: '*',
