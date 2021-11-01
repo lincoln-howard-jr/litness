@@ -1,0 +1,68 @@
+.pin-list-view {
+  overflow: hidden;
+  transition: 0.5s;
+  transform-origin: bottom left;
+  z-index: 3;
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  width: min(30ch, 70vw);
+  padding: 1rem;
+  background-color: hsla(0, 0%, 100%, 1);
+  box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
+}
+.pin-list-view.hidden {
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid black;
+  border-radius: 2.5rem;
+  box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
+}
+.pin-list-view.hidden * {
+  transition: 0.5s;
+}
+.pin-list-view.hidden * {
+  transform: scale(0);
+  opacity: 0;
+}
+.pin-list-view ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.pin-list-view li {
+  line-height: 1.75rem;
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: 2.5ch 1fr;
+}
+.pin-list-view li span {
+  display: grid;
+  align-items: baseline;
+}
+.pin-list-view li span:first-child {
+  text-align: center;
+}
+.pin-list-view h2 {
+  margin: 0;
+}
+.pin-list-view img {
+  width: 100%;
+}
+.pin-list-view .minimize {
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: var(--color-secondary-400-6);
+}
+@media (hover: hover) {
+  .pin-list-view .minimize:hover {
+    color: var(--color-secondary-400);
+  }
+  .pin-list-view.hidden:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 2px 7px hsla(0, 0%, 50%, 1);
+  }
+}

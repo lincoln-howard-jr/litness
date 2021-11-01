@@ -6,11 +6,15 @@ html, body {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: hsla(193, 46%, 77%, 1);
-  background: linear-gradient(45deg, hsla(193, 46%, 77%, 1) 0%, hsla(153, 42%, 77%, 35%) 45%, hsla(104, 36%, 77%, 1) 100%);
+  background-color: var(--color-accent-500);
+  background: linear-gradient(45deg, var(--color-accent-500) 0%, var(--color-primary-300-4) 45%, var(--color-primary-400) 100%);
 }
 * {
-  font-family: 'Bitter', serif;
-  letter-spacing: 1.2px;
+  font-family: var(--primary-font-family);
+  letter-spacing: var(--letter-spacing);
   box-sizing: border-box;
+  user-select: none;
+}
+input {
+  user-select: text;
 }

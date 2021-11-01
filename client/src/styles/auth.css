@@ -9,10 +9,10 @@
   margin: 10vh auto;
   background-color: hsla(0, 0%, 100%, 0.6);
   border-radius: .5rem;
-  border-bottom: 0.25rem solid hsla(0, 0%, 100%, 0.1);
-  border-right: 0.25rem solid hsla(0, 0%, 100%, 0.1);
-  border-top: 0.25rem solid hsla(0, 0%, 100%, 0.8);
-  border-left: 0.25rem solid hsla(0, 0%, 100%, 0.8);
+  border-bottom: 0.25rem solid var(--color-secondary-200-2);
+  border-right: 0.25rem solid var(--color-secondary-200);
+  border-top: 0.25rem solid var(--color-secondary-200-8);
+  border-left: 0.25rem solid var(--color-secondary-200-8);
 }
 .auth-conatiner input {
   font-size: 0.95rem;
@@ -22,15 +22,15 @@
   outline: none;
   background-color: transparent;
   border: none;
-  border-bottom: 0.125rem solid hsla(193, 46%, 77%, 1);
+  border-bottom: 0.125rem solid var(--color-accent-400);
 }
 .auth-conatiner button {
   cursor: pointer;
   font-size: 0.95rem;
   padding: 0.25rem 2ch;
   margin-block: 0.5rem;
-  background-color: hsla(193, 46%, 77%, 0.3);
-  border: 0.025rem solid hsla(193, 77%, 5%, 1);
+  background-color: var(--color-accent-500-2);
+  border: 0.025rem solid var(--color-accent-200);
   border-radius: 0.25rem;
 }
 @media (hover: hover) {
@@ -39,14 +39,14 @@
   }
   .auth-conatiner button:hover {
     font-weight: 600;
-    color: hsla(193, 46%, 77%, 1);
-    background-color: hsla(193, 77%, 5%, 1);
+    color: var(--color-secondary-500);
+    background-color: var(--color-secondary-200);
   }
 }
 @media (hover: none) {
   .auth-conatiner button:active {
     font-weight: 600;
-    color: hsla(193, 46%, 77%, 1);
-    background-color: hsla(193, 77%, 5%, 1);
+    color: var(--color-accent-500);
+    background-color: var(--color-accent-200);
   }
 }
