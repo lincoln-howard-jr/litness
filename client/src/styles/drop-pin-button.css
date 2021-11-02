@@ -9,7 +9,7 @@
 }
 .drop-pin-button {
   animation: drop-pin-rise 0.5s;
-  z-index: 10;
+  z-index: 5;
   cursor: pointer;
   position: fixed;
   right: 1.5rem;
@@ -26,13 +26,13 @@
   width: 100%;
 }
 .drop-pin-backdrop {
-  z-index: 7;
+  z-index: 10;
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #ccccccaa;
+  background-color: var(--color-accent-200-4);
 }
 .fire-button {
   animation: drop-pin-rise 0.5s;
@@ -46,7 +46,7 @@
   border-radius: 1.25rem;
   border: 1px solid var(--color-primary-200);
   background-color: var(--color-secondary-600);
-  box-shadow: 1px 1px 3px white;
+  box-shadow: 1px 1px 3px #666;
   transition: 0.3s;
   display: grid;
   align-items: center;
@@ -77,6 +77,10 @@
   bottom: 16.5rem;
   width: 12.5rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.drop-pin.place-list {
+  margin: 0 auto;
+  max-width: min(52ch, 84vw);
 }
 .drop-pin.place-list .exit {
   transition: 0.3s;
@@ -134,21 +138,21 @@
   outline: none;
   border: none;
   font-size: 1rem;
+  background-color: transparent;
 }
 .drop-pin.place-list .select-dropdown-custom-place img {
-  max-width: 100%;
+  width: 100%;
 }
 .drop-pin.place-list .select-dropdown {
   transition: 0.3s;
   transform-origin: top;
-  background-color: #ffffff;
-  width: 55ch;
-  max-width: 84vw;
+  background-color: #fffffff0;
   max-height: 67vh;
   overflow-y: scroll;
   padding: 1rem 2.5ch;
-  margin: 0 auto;
+  margin: 12vh 0;
   box-shadow: 1px 1px 3px #666;
+  width: 100%;
 }
 .drop-pin.place-list header {
   text-align: center;

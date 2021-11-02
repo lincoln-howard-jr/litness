@@ -1,15 +1,15 @@
-@keyframes list-view-rise {
+@keyframes list-view-slide-from-left {
   0% {
-    bottom: 0;
+    left: 0;
     opacity: 0;
   }
   100% {
     opacity: 1;
   }
 }
-@keyframes list-view-rise-active {
+@keyframes list-view-slide-from-top {
   0% {
-    bottom: 0;
+    transform: translateY(-2.5rem);
     opacity: 0;
   }
   100% {
@@ -18,42 +18,68 @@
 }
 .pin-list-view {
   overflow: hidden;
-  transform-origin: bottom left;
-  z-index: 3;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  padding: 12vh 8vw;
+  background-color: var(--color-secondary-200-4);
+}
+.pin-list-view.hidden {
+  display: none;
+}
+.pin-list-view + button {
+  z-index: 5;
+  display: none;
   position: fixed;
   left: 1.5rem;
   bottom: 1.5rem;
-  width: min(30ch, 70vw);
-  padding: 1rem;
-  background-color: hsla(0, 0%, 100%, 1);
-  box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
-  animation: list-view-rise 0.5s;
-}
-.pin-list-view.hidden {
-  cursor: pointer;
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: 1.25rem;
   border: 1px solid black;
-  border-radius: 2.5rem;
-  box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
-  animation: list-view-rise-active 0.5s;
+  background-color: var(--color-secondary-600);
+  box-shadow: 1px 1px 3px #666;
 }
-.pin-list-view.hidden * {
-  transition: 0.3s;
+.pin-list-view.hidden + button {
+  display: block;
+  animation: list-view-slide-from-left 0.3s;
 }
-.pin-list-view.hidden * {
-  transform: scale(0);
-  opacity: 0;
+.pin-list-view + button img {
+  width: 100%;
+}
+.pin-list-view header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 2rem 1fr 2rem;
+  text-align: center;
+  text-decoration: underline;
+}
+.pin-list-view header img {
+  margin: 0.5rem 0;
+  padding: 0;
+}
+.pin-list-view h1 {
+  margin: 0;
+  color: var(--color-primary-200);
 }
 .pin-list-view ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  background-color: #fffffff0;
+  margin: 0 auto;
+  padding: 2rem 2ch;
+  max-width: min(52ch, 84vw);
+  animation: list-view-slide-from-top 0.3s;
+  box-shadow: 1px 1px 3px #666;
 }
 .pin-list-view li {
+  cursor: pointer;
+  margin-bottom: 0.75rem;
   line-height: 1.75rem;
   display: grid;
-  gap: 0.25rem;
+  column-gap: 0.75rem;
   grid-template-columns: 2.5ch 1fr;
 }
 .pin-list-view hr {
@@ -72,13 +98,6 @@
 .pin-list-view img {
   width: 100%;
 }
-.pin-list-view .minimize {
-  font-size: 0.8rem;
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  color: var(--color-secondary-400-6);
-}
 @media (hover: hover) {
   .pin-list-view .minimize:hover {
     color: var(--color-secondary-400);
@@ -86,5 +105,8 @@
   .pin-list-view.hidden:hover {
     transform: scale(1.05);
     box-shadow: 2px 2px 7px hsla(0, 0%, 50%, 1);
+  }
+  .pin-list-view li:hover :nth-child(2n) {
+    text-decoration: underline;
   }
 }

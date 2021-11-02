@@ -13,6 +13,7 @@ export interface LocationHook {
     lat: number | null,
     lng: number | null
   };
+  setCoords: (lat: number, lng: number) => void;
   getPlaces: () => Promise<void>;
 }
 export const mockUseLocation:LocationHook = {
@@ -22,6 +23,7 @@ export const mockUseLocation:LocationHook = {
     lat: null,
     lng: null
   },
+  setCoords: (lat: number, lng: number) => {},
   getPlaces: () => new Promise (r => {})
 }
 export default function useLocation ():LocationHook {
@@ -29,6 +31,11 @@ export default function useLocation ():LocationHook {
   const [places, setPlaces] = useState<any []> ([]);
   const [lat, setLat] = useState<number | null> (null);
   const [lng, setLng] = useState<number | null> (null);
+
+  const setCoords = (lat: number, lng: number) => {
+    setLat (lat);
+    setLng (lng);
+  }
 
   const getPlaces = async () => new Promise<void> (async (resolve, reject) => {
     try {
@@ -82,6 +89,7 @@ export default function useLocation ():LocationHook {
       lat,
       lng
     },
+    setCoords,
     getPlaces
   }
 }

@@ -6,7 +6,10 @@ import { UserHook } from "./useUser";
 
 interface Distribution {
   name: string;
-  percent: number;
+  address: string;
+  litness: number;
+  lat: number;
+  lng: number;
 }
 
 interface Pin {
@@ -65,20 +68,25 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
     try {
       let req = await fetch (`https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/pins?lat=${location.coords.lat}&lng=${location.coords.lng}&r=0.1`);
       let data = await req.json () as Pin[];
-      let total = data.reduce ((acc, val) => {
-        return acc + val.litness;
-      }, 0);
       let byName = data.reduce<string[]> ((acc, val) => {
         if (acc.includes (val.placeName)) return acc;
         return [...acc, val.placeName];
       }, []);
-      let ranks = byName.map (name => data.filter (pin => pin.placeName === name)).map (list => {
+      let litnesses = byName.map (name => data.filter (pin => pin.placeName === name)).map ((list, i, arr) => {
         return list.reduce ((acc, val) => {
           return acc + val.litness;
-        }, 0) / total;
+        }, 0) / arr.length;
       });
-      let dist = byName.map ((name, i) => ({name, percent: ranks [i]}))
-      dist.sort ((a, b) => a.percent - b.percent);
+      let info = byName.map (name => {
+        let pin = data.find (p => p.placeName === name);
+        return {
+          address: pin?.placeAddress || 'unknown',
+          lat: pin?.lat || 0,
+          lng: pin?.lng || 0,
+        }
+      });
+      let dist = byName.map ((name, i) => ({name, litness: litnesses [i], ...info [i]}))
+      dist.sort ((a, b) => a.litness - b.litness);
       setDistribution (dist);
       const geoJson:PointFeatureSet = {
         type: 'FeatureCollection',

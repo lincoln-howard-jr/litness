@@ -10,6 +10,12 @@ export default function DropPin () {
   const [litness, setLitness] = useState<number> (0);
   const [customLocation, setCustomLocation] = useState<string> ('');
 
+  const backdropRef = useRef<HTMLDivElement> (null);
+
+  const close = (e:MouseEvent<HTMLDivElement>) => {
+    if (e.target === backdropRef.current) reset ();
+  }
+
   const reset = () => {
     setDropping (false);
     setLitness (0);
@@ -41,15 +47,12 @@ export default function DropPin () {
 
   if (!app.user.isAuthenticated || !app.location.locationAvailable) return null;
   if (litness > 0) return (
-    <div className="drop-pin-backdrop">
+    <div ref={backdropRef} onClick={close} className="drop-pin-backdrop">
       <div className="drop-pin place-list">
-          <div onClick={reset} className="exit">
-            <img src={cancel} />
-          </div>
+        <div className="select-dropdown">
         <header>
           <h1>Select current location:</h1>
         </header>
-        <div className="select-dropdown">
           {
             app.location.places.map ((place: any) => (
               <div onClick={() => {finish (place.attributes.PlaceName, place.attributes.Place_addr)}} className="select-option">
@@ -72,7 +75,7 @@ export default function DropPin () {
     </div>
   )
   if (dropping) return (
-    <div className="drop-pin-backdrop">
+    <div ref={backdropRef} onClick={close} className="drop-pin-backdrop">
       <div className="drop-pin-list">
         <button onClick={() => setDropping (false)} className="fire-button cancel">
           <img src={cancel} />
