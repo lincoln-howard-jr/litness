@@ -1,6 +1,23 @@
+@keyframes list-view-rise {
+  0% {
+    bottom: 0;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes list-view-rise-active {
+  0% {
+    bottom: 0;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .pin-list-view {
   overflow: hidden;
-  transition: 0.5s;
   transform-origin: bottom left;
   z-index: 3;
   position: fixed;
@@ -10,6 +27,7 @@
   padding: 1rem;
   background-color: hsla(0, 0%, 100%, 1);
   box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
+  animation: list-view-rise 0.5s;
 }
 .pin-list-view.hidden {
   cursor: pointer;
@@ -18,9 +36,10 @@
   border: 1px solid black;
   border-radius: 2.5rem;
   box-shadow: 1px 1px 3px hsla(0, 0%, 50%, 1);
+  animation: list-view-rise-active 0.5s;
 }
 .pin-list-view.hidden * {
-  transition: 0.5s;
+  transition: 0.3s;
 }
 .pin-list-view.hidden * {
   transform: scale(0);
@@ -36,6 +55,9 @@
   display: grid;
   gap: 0.25rem;
   grid-template-columns: 2.5ch 1fr;
+}
+.pin-list-view hr {
+  margin: 0.75rem 1.75ch;
 }
 .pin-list-view li span {
   display: grid;
