@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useApp } from "../AppProvider";
-import { cancel, caret, fire, pen, pin, plus } from "../img";
+import { cancel, fire, pin, plus } from "../img";
 
 export default function DropPin () {
   const app = useApp ();
@@ -45,37 +45,34 @@ export default function DropPin () {
     }
   }
 
-  if (!app.user.isAuthenticated || !app.location.locationAvailable) return null;
   if (litness > 0) return (
-    <div ref={backdropRef} onClick={close} className="drop-pin-backdrop">
-      <div className="drop-pin place-list">
-        <div className="select-dropdown">
+    <div ref={backdropRef} onClick={close} className="overlay-backdrop drop-pin-backdrop">
+      <div className="overlay-panel drop-pin place-list">
         <header>
           <h1>Select current location:</h1>
         </header>
-          {
-            app.location.places.map ((place: any) => (
-              <div onClick={() => {finish (place.attributes.PlaceName, place.attributes.Place_addr)}} className="select-option">
-                <h3>{place.attributes.PlaceName}</h3>
-                <address>{place.attributes.Place_addr}</address>
-              </div>
-            ))
-          }
-          <hr />
-          <div className="select-dropdown-custom-place">
-            <label>
-              <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
-              <span onClick={() => {finish (customLocation, 'unknown')}}>
-                <img src={plus} />
-              </span>
-            </label>
-          </div>
+        {
+          app.location.places.map ((place: any) => (
+            <div onClick={() => {finish (place.attributes.PlaceName, place.attributes.Place_addr)}} className="select-option">
+              <h3>{place.attributes.PlaceName}</h3>
+              <address>{place.attributes.Place_addr}</address>
+            </div>
+          ))
+        }
+        <hr />
+        <div className="select-dropdown-custom-place">
+          <label>
+            <input value={customLocation} onChange={e => setCustomLocation (e.target.value)} placeholder="Enter location here" />
+            <span onClick={() => {finish (customLocation, 'unknown')}}>
+              <img src={plus} />
+            </span>
+          </label>
         </div>
       </div>
     </div>
   )
   if (dropping) return (
-    <div ref={backdropRef} onClick={close} className="drop-pin-backdrop">
+    <div ref={backdropRef} onClick={close} className="overlay-backdrop drop-pin-backdrop">
       <div className="drop-pin-list">
         <button onClick={() => setDropping (false)} className="fire-button cancel">
           <img src={cancel} />
@@ -109,7 +106,7 @@ export default function DropPin () {
     </div>
   )
   return (
-    <button onClick={() => setDropping (true)} className="drop-pin-button">
+    <button onClick={() => setDropping (true)} className="action-button drop-pin-button">
       <img src={pin} />
     </button>
   )

@@ -1,0 +1,65 @@
+@keyframes overlay-slide-from-top {
+  0% {
+    transform: translateY(-2.5rem);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.overlay-backdrop {
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-accent-200-4);
+}
+.overlay-panel {
+  animation: overlay-slide-from-top 0.5s;
+  transition: 0.3s;
+  background-color: #fffffff0;
+  max-height: 75vh;
+  overflow-y: scroll;
+  margin: 2vh auto 0 auto;
+  padding: 1rem 2.5ch;
+  box-shadow: 1px 1px 3px #666;
+  width: min(65ch, 92vw);
+}
+
+
+@keyframes action-button-slide-up {
+  0% {
+    transform: translateY(2.5rem);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.action-button {
+  --position: 0;
+  --bkg: var(--color-secondary-600);
+  animation: action-button-slide-up 0.5s;
+  transition: 0.5s;
+  z-index: 5;
+  position: fixed;
+  right: calc(var(--position) * 3.5rem + 1rem);
+  bottom: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid black;
+  background-color: var(--bkg);
+  box-shadow: 1px 1px 3px #666;
+}
+.action-button img {
+  width: 100%;
+}
+@media (hover: hover) {
+  .action-button:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 2px 7px gray;
+  }
+}

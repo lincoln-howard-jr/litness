@@ -1,52 +1,45 @@
-.auth-conatiner {
+@keyframes auth-button-rise {
+  0% {
+    bottom: 0;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.auth-button {
+  --position: 2;
+  --bkg: #fff;
+}
+.auth {
   display: grid;
-  align-items: center;
   justify-items: center;
-  row-gap: 1rem;
-  padding: 2rem;
-  width: 84vw;
-  max-width: 60ch;
-  margin: 10vh auto;
-  background-color: hsla(0, 0%, 100%, 0.6);
-  border-radius: .5rem;
-  border-bottom: 0.25rem solid var(--color-secondary-200-2);
-  border-right: 0.25rem solid var(--color-secondary-200);
-  border-top: 0.25rem solid var(--color-secondary-200-8);
-  border-left: 0.25rem solid var(--color-secondary-200-8);
+  gap: 1rem;
 }
-.auth-conatiner input {
-  font-size: 0.95rem;
-  height: 1.75rem;
-  width: 18ch;
-  padding: 0.25rem 2ch;
+.auth hr {
+  width: 100%;
+}
+.auth header {
+  text-align: center;
+}
+.auth .error {
+  color: var(--color-secondary-500);
+}
+.auth input {
   outline: none;
-  background-color: transparent;
   border: none;
-  border-bottom: 0.125rem solid var(--color-accent-400);
+  background-color: transparent;
+  border-bottom: 1px dashed var(--color-accent-200);
+  max-width: 16.5ch;
+  padding: 0.5rem 2ch;
+  line-height: 0.9rem;
+  font-size: 0.9rem;
 }
-.auth-conatiner button {
-  cursor: pointer;
-  font-size: 0.95rem;
-  padding: 0.25rem 2ch;
-  margin-block: 0.5rem;
-  background-color: var(--color-accent-500-2);
-  border: 0.025rem solid var(--color-accent-200);
+.auth button {
+  border: 1px solid var(--color-primary-200);
   border-radius: 0.25rem;
-}
-@media (hover: hover) {
-  .auth-conatiner button {
-    transition: 0.3s;
-  }
-  .auth-conatiner button:hover {
-    font-weight: 600;
-    color: var(--color-secondary-500);
-    background-color: var(--color-secondary-200);
-  }
-}
-@media (hover: none) {
-  .auth-conatiner button:active {
-    font-weight: 600;
-    color: var(--color-accent-500);
-    background-color: var(--color-accent-200);
-  }
+  display: inline-block;
+  margin: 1.5rem auto;
+  padding: 0.5rem 2ch;
+  background-color: transparent;
 }

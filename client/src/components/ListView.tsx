@@ -15,23 +15,29 @@ export default function ListView () {
   const app = useApp ();
   const backdropRef = useRef<HTMLDivElement> (null);
 
-  const [className, setClassName] = useState<string> ('pin-list-view hidden');
+  const [open, setOpen] = useState<boolean> (false);
   const close = (e:MouseEvent<HTMLDivElement>) => {
-    if (e.target === backdropRef.current) setClassName ('pin-list-view hidden');
+    if (e.target === backdropRef.current) setOpen (false);
   }
-  if (!app.location.locationAvailable) return null;
+  
+  if (!app.pins.distribution.length) return null;
+  if (!open) return (
+    <button className="action-button list-view-button" onClick={() => setOpen (true)}>
+      <img src={fire} />
+    </button>
+  )
   return (
-    <>
-      <div ref={backdropRef} className={className} onClick={close}>
+    <div ref={backdropRef} className="overlay-backdrop" onClick={close}>
+      <div className="overlay-panel pin-list-view">
+        <header>
+          <span><img src={fire} /></span>
+          <h1>Top Spots</h1>
+        </header>
+        <hr />
         <ul>
-          <header>
-            <span><img src={fire} /></span>
-            <h1>Top 5</h1>
-          </header>
-          <hr />
           {
             app.pins.distribution.filter ((_, i) => i < 5).map (({name, address, lat, lng}, i) => (
-              <li onClick={() => {setClassName ('pin-list-view hidden'); app.location.setCoords (lat, lng)}}>
+              <li onClick={() => {setOpen (false); app.location.setCoords (lat, lng)}}>
                 <span>{i + 1}.</span>
                 <span>{name}</span>
                 <span/>
@@ -41,9 +47,7 @@ export default function ListView () {
           }
         </ul>
       </div>
-      <button onClick={() => setClassName (switcher [className])}>
-        <img src={fire} />
-      </button>
-    </>
-  );
+    </div>
+  )
+  
 }

@@ -45,7 +45,7 @@ export const mockUseUser:UserHook = {
   headers: {
     get: {},
     post: {
-      'Content-Type': ''
+      'Content-Type': 'application/json'
     }
   },
   authError: null,

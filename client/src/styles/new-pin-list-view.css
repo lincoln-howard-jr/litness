@@ -1,0 +1,16 @@
+.list-view-button {
+  --position: 1;
+}
+.pin-list-view header {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1.5rem 1fr 1.5rem;
+}
+.pin-list-view ul {
+  list-style-type: none;
+}
+.pin-list-view li {
+  display: grid;
+  grid-template-columns: 2ch 1fr;
+}

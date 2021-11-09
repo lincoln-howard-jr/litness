@@ -85,6 +85,6 @@ export default function Map () {
   }, [app.pins.iter]);
 
   return (
-    <div id="ol-map" className={!app.user.isAuthenticated ? 'hidden' : undefined} ref={mapref} />
+    <div id="ol-map" className={app.location.locationAvailable ? undefined : 'hidden'} ref={mapref} />
   )
 }

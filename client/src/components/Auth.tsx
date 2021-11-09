@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { MouseEvent, useRef, useState } from "react";
 import { useApp } from "../AppProvider";
+import { person } from "../img";
 import fmtPhoneNumber, { stripPhoneNumber } from "../lib/phonenumber";
 
 const fmtRawPhoneNumber = (stripped:string) => {
@@ -14,30 +15,60 @@ export default function Auth () {
   // global state
   const {user: {isAuthenticated, promptForCode, authError, getCode, answer}} = useApp ();
   // local state
+  const [open, setOpen] = useState<boolean> (false);
   const [rawNumber, setRawNumber] = useState<string> ('');
+  const [error, setError] = useState<string | null> (null)
+  const backdropRef = useRef<HTMLDivElement> (null);
   const ref = useRef<HTMLInputElement> (null);
+
+  const runGetCode = () => {
+    try {
+      getCode (fmtPhoneNumber (rawNumber))
+    } catch (e: any) {
+      setError (e?.toString () || 'number not correct');
+    }
+  }
+
+
+  const close = (e:MouseEvent<HTMLDivElement>) => {
+    if (e.target === backdropRef.current) setOpen (false);
+  }
 
   if (isAuthenticated) return null;
   if (promptForCode) return (
-    <div className="auth-container">
-      <header>
-        <p>We texted you a code! Enter it here!</p>
-      </header>
-      <input ref={ref} autoComplete="one-time-code" placeholder="Secret code here" />
-      <button onClick={() => {if (ref.current?.value) answer (ref.current.value)}}>Send Code</button>
+    <div ref={backdropRef} className="overlay-backdrop" onClick={close}>
+      <div className="overlay-panel auth code">
+        <header>
+          <p>We texted you a code! Enter it here!</p>
+        </header>
+        <input ref={ref} autoComplete="one-time-code" placeholder="Secret code here" />
+        <button onClick={() => {if (ref.current?.value) answer (ref.current.value)}}>Send Code</button>
+      </div>
+    </div>
+  )
+  if (open) return (
+    <div ref={backdropRef} className="overlay-backdrop" onClick={close}>
+      <div className="overlay-panel auth login">
+        <header>
+          <h1>Litness Sign In</h1>
+        </header>
+        <hr />
+        {
+          authError &&
+          <div className="error">{authError}</div>
+        }
+        {
+          error &&
+          <div className="error">{error}</div>
+        }
+        <input type="text" placeholder="(012) 345-6789" autoComplete="off" onChange={e => setRawNumber (stripPhoneNumber (e.target.value))} value={fmtRawPhoneNumber (rawNumber)} ></input>
+        <button onClick={runGetCode}>Sign In</button>
+      </div>
     </div>
   )
   return (
-    <div className="auth-conatiner">
-      <header>
-        <h1>Litness Sign In</h1>
-      </header>
-      {
-        authError &&
-        <div className="error">{authError}</div>
-      }
-      <input type="text" placeholder="(012) 345-6789" autoComplete="off" onChange={e => setRawNumber (stripPhoneNumber (e.target.value))} value={fmtRawPhoneNumber (rawNumber)} ></input>
-      <button onClick={() => {getCode (fmtPhoneNumber (rawNumber))}}>Sign In</button>
-    </div>
+    <button className="action-button auth-button" onClick={() => setOpen (true)}>
+      <img src={person} />
+    </button>
   )
 }

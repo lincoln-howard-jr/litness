@@ -58,6 +58,7 @@ export default function useLocation ():LocationHook {
   })
 
   const success = (pos:GeolocationPosition) => {
+    console.log ('success');
     setLat (pos.coords.latitude);
     setLng (pos.coords.longitude);
     setLocationAvailable (true);

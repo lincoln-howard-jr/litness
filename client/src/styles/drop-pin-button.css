@@ -7,39 +7,18 @@
     opacity: 1;
   }
 }
-.drop-pin-button {
-  animation: drop-pin-rise 0.5s;
-  z-index: 5;
-  cursor: pointer;
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 1.25rem;
-  border: 1px solid black;
-  background-color: var(--color-primary-600);
-  box-shadow: 1px 1px 3px #666;
-  transition: 0.3s;
+button.drop-pin-button {
+  --bkg: var(--color-primary-600);
 }
 .drop-pin-button img {
   width: 100%;
-}
-.drop-pin-backdrop {
-  z-index: 10;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--color-accent-200-4);
 }
 .fire-button {
   animation: drop-pin-rise 0.5s;
   z-index: 10;
   cursor: pointer;
   position: fixed;
-  right: 1.5rem;
+  right: 1rem;
   bottom: 1.5rem;
   height: 2.5rem;
   width: 2.5rem;
@@ -78,27 +57,7 @@
   width: 12.5rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-.drop-pin.place-list {
-  margin: 0 auto;
-  max-width: min(52ch, 84vw);
-}
-.drop-pin.place-list .exit {
-  transition: 0.3s;
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border-radius: 1.25rem;
-  background-color: #ffffff;
-  box-shadow: 1px 1px 3px #666;
-  cursor: pointer;
-}
-.drop-pin.place-list .exit img {
-  width: 100%;
-}
-.drop-pin.place-list .select-dropdown div {
+.drop-pin.place-list div {
   padding: 0.125rem 0;
   margin: 0.25rem 0;
 }
@@ -143,17 +102,6 @@
 .drop-pin.place-list .select-dropdown-custom-place img {
   width: 100%;
 }
-.drop-pin.place-list .select-dropdown {
-  transition: 0.3s;
-  transform-origin: top;
-  background-color: #fffffff0;
-  max-height: 67vh;
-  overflow-y: scroll;
-  padding: 1rem 2.5ch;
-  margin: 12vh 0;
-  box-shadow: 1px 1px 3px #666;
-  width: 100%;
-}
 .drop-pin.place-list header {
   text-align: center;
   max-width: 75vw;
@@ -164,10 +112,6 @@
   color: var(--color-primary-200);
 }
 @media (hover: hover) {
-  .drop-pin-button:hover {
-    transform: scale(1.05);
-    box-shadow: 2px 2px 7px gray;
-  }
   .fire-button:hover {
     box-shadow: 2px 2px 7px gray;
   }
