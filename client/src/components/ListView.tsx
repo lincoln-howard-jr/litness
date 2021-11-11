@@ -20,7 +20,6 @@ export default function ListView () {
     if (e.target === backdropRef.current) setOpen (false);
   }
   
-  if (!app.pins.distribution.length) return null;
   if (!open) return (
     <button className="action-button list-view-button" onClick={() => setOpen (true)}>
       <img src={fire} />
@@ -31,7 +30,13 @@ export default function ListView () {
       <div className="overlay-panel pin-list-view">
         <header>
           <span><img src={fire} /></span>
-          <h1>Top Spots</h1>
+          <h1>
+            {
+              app.pins.distribution.length > 0 ?
+              'Top Spots' :
+              'It\'s Dead, Jim'
+            }
+          </h1>
         </header>
         <hr />
         <ul>

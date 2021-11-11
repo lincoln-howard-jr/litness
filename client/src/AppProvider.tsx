@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import useLocation, { LocationHook, mockUseLocation } from "./hooks/useLocation";
 import usePins, { mockUsePins, PinsHook } from "./hooks/usePins";
+import useRouter, { mockUseRouter, RouterHook } from "./hooks/useRouter";
 import useUser, { mockUseUser, UserHook } from "./hooks/useUser";
 
 interface AppProviderProps {
@@ -16,13 +17,15 @@ interface ContextValue {
   user: UserHook;
   pins: PinsHook;
   location: LocationHook;
+  router: RouterHook;
 }
 
 const defaultValue:ContextValue = {
   freeze: ()=>()=>{},
   user: mockUseUser,
   pins: mockUsePins,
-  location: mockUseLocation
+  location: mockUseLocation,
+  router: mockUseRouter
 }
 
 // react context api
@@ -43,12 +46,14 @@ export default function AppProvider (props: AppProviderProps) {
   const user = useUser (freeze);
   const location = useLocation ();
   const pins = usePins (user, location, freeze);
+  const router = useRouter ();
 
   const value:ContextValue = {
     freeze,
     user,
     pins,
-    location
+    location,
+    router
   }
 
   return (

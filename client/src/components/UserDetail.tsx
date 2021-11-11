@@ -12,7 +12,10 @@ export default function UserDetail (props: UserDetailProps) {
 
   const [editing, setEditing] = useState<boolean> (false);
   const [value, setValue] = useState<string> (app.user.detail (props.name) || '');
-
+  const deferFinishEditing = () => {
+    setTimeout (() => setEditing (false), 300);
+  }
+  
   if (!app.user.hasDetail (props.name)) return (
     <section>
       <label>{props.label}</label>
@@ -25,8 +28,8 @@ export default function UserDetail (props: UserDetailProps) {
   if (editing) return (
     <section>
       <label>{props.label}</label>
-      <input autoFocus value={value} onChange={e => setValue (e.target.value)} />
-      <span onClick={() => app.user.createDetail (props.name, value)} className="clickable">
+      <input onBlur={deferFinishEditing} autoFocus value={value} onChange={e => setValue (e.target.value)} />
+      <span onClick={() => {app.user.createDetail (props.name, value); setEditing (false)}} className="clickable">
         <img src={check} />
       </span>
     </section>

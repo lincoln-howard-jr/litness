@@ -6,7 +6,7 @@ export default function DropPin () {
   const app = useApp ();
 
   const ref = useRef<HTMLDivElement> (null);
-  const [dropping, setDropping] = useState<boolean> (false);
+  const [dropping, setDropping] = useState<boolean> (app.router.qsp.has ('is-dropping'));
   const [litness, setLitness] = useState<number> (0);
   const [customLocation, setCustomLocation] = useState<string> ('');
 
@@ -25,9 +25,9 @@ export default function DropPin () {
     if (!e || e.target === ref.current) reset ();
   }
 
-  const finish = async (name: string, addy: string) => {
+  const finish = async (name: string, addy: string, _litness=litness) => {
     try {
-      await app.pins.createPin (litness, name, addy);
+      await app.pins.createPin (_litness, name, addy);
     } catch (e: any) {
       alert (e?.toString () || 'error while creating pin');
     } finally {
@@ -37,6 +37,12 @@ export default function DropPin () {
 
   const startDropping = (litness: number) => async () => {
     try {
+      if (app.router.qsp.has ('is-dropping')) {
+        let name = app.router.qsp.get ('name');
+        let addy = app.router.qsp.get ('addy');
+        if (!name || !addy) throw new Error ('Addy and name not defined by query string');
+        return await finish (name, addy, litness);
+      }
       setDropping (false);
       setLitness (litness)
       await app.location.getPlaces ();

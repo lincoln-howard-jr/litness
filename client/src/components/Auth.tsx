@@ -39,7 +39,7 @@ export default function Auth () {
       <div className="overlay-panel profile view">
         <header>
           <span />
-          <h2>It's Lit, Fam</h2>
+          <h2>It's Lit, Fam!</h2>
           <span />
         </header>
         <header>
