@@ -21,6 +21,13 @@ interface AnswerFunction {
   (answer: string): void;
 }
 
+interface UserDetail {
+  attributeName: string;
+  attributeValue: string;
+  dateCreated: number;
+  id: string;
+}
+
 export interface UserHook {
   isAuthenticated: boolean;
   promptForCode: boolean;
@@ -34,8 +41,13 @@ export interface UserHook {
     }
   };
   authError: string | null;
+  userDetails: UserDetail[];
   getCode: (phoneNumber: string) => void;
   answer: AnswerFunction;
+  createDetail: (attributeName: string, attributeValue: string) => Promise<void>;
+  getDetails: () => Promise<void>;
+  hasDetail: (name: string) => boolean;
+  detail: (name: string) => string | undefined;
   logout: () => Promise<void>;
 }
 
@@ -49,8 +61,13 @@ export const mockUseUser:UserHook = {
     }
   },
   authError: null,
-  getCode: (phoneNumber: string) => {},
-  answer: (answer:string) => {},
+  userDetails: [],
+  getCode: () => {},
+  answer: () => {},
+  createDetail: () => new Promise (r => r()),
+  getDetails: () => new Promise (r => r()),
+  hasDetail: () => false,
+  detail: () => undefined,
   logout: () => new Promise<void> (r => r())
 } 
 
@@ -75,6 +92,7 @@ export default function useUser (freeze: FreezeFn):UserHook {
 
   // state
   const [authError, setError] = useState<string | null> (null);
+  const [userDetails, setDetails] = useState<UserDetail[]> ([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean> (false);
   const [promptForCode, setPromptForCode] = useState<boolean> (false);
   const [answer, setAnswer] = useState<AnswerFunction> ((answer:string) => {});
@@ -154,6 +172,41 @@ export default function useUser (freeze: FreezeFn):UserHook {
     });
   }
   
+  // create a user detail
+  const createDetail = async (attributeName:string, attributeValue:string) => new Promise<void> (async (resolve, reject) => {
+    try {
+      const req = await fetch ('https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/user-details', {
+        method: 'post',
+        headers: headers.post,
+        body: JSON.stringify ({attributeName, attributeValue})
+      });
+      const data = await req.json ();
+      setDetails (ds => [data, ...ds]);
+      resolve ();
+    } catch (e) {
+      reject (e);
+    }
+  });
+
+  // get user details
+  const getDetails = async () => new Promise<void> (async (resolve, reject) => {
+    try {
+      const req = await fetch ('https://1ge3owx5sf.execute-api.us-east-1.amazonaws.com/Prod/user-details', {
+        headers: headers.get
+      })
+      const data = (await req.json ()) as UserDetail[];
+      data.sort ((a, b) => b.dateCreated - a.dateCreated);
+      setDetails (data);
+      resolve ();
+    } catch (e) {
+      reject (e);
+    }
+  });
+
+  // access details
+  const hasDetail = (name: string) => !!userDetails.find (d => d.attributeName === name);
+  const detail = (name: string) => userDetails.find (d => d.attributeName === name)?.attributeValue;
+
   // public method - sign user out
   const logout = () => new Promise<void> (async (resolve, reject) => {
     if (user) {
@@ -171,13 +224,22 @@ export default function useUser (freeze: FreezeFn):UserHook {
     init ();
   }, [])
 
+  useEffect (() => {
+    if (isAuthenticated) getDetails ();
+  }, [isAuthenticated])
+
   return {
     isAuthenticated,
     promptForCode,
     headers,
+    userDetails,
     authError,
     getCode,
     answer,
+    createDetail,
+    getDetails,
+    hasDetail,
+    detail,
     logout
   }
 

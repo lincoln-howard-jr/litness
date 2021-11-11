@@ -43,3 +43,38 @@
   padding: 0.5rem 2ch;
   background-color: transparent;
 }
+.profile header {
+  display: grid;
+  text-align: center;
+  align-items: center;
+  grid-template-columns: 1rem 1fr 1rem;
+}
+.profile .clickable {
+  cursor: pointer;
+}
+.profile section {
+  display: grid;
+  grid-template-columns: 1fr 1rem;
+  grid-template-areas: "label img"
+                       "value img";
+  gap: 1rem;
+  max-width: 40ch;
+  align-items: center;
+  margin: 2rem auto;
+}
+.profile section label {
+  grid-area: label;
+}
+.profile section input, .profile p {
+  grid-area: value;
+  margin: 0;
+}
+.profile section span {
+  grid-area: img;
+}
+.profile input {
+  outline: none;
+  border: none;
+  border-bottom: 1px dashed var(--color-primary-200);
+  background: transparent;
+}
