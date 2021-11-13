@@ -1,28 +1,29 @@
 {
   "files": {
-    "main.css": "/litness/static/css/main.93ec6d93.chunk.css",
-    "main.js": "/litness/static/js/main.3c361186.chunk.js",
-    "main.js.map": "/litness/static/js/main.3c361186.chunk.js.map",
+    "main.css": "/litness/static/css/main.5034fd99.chunk.css",
+    "main.js": "/litness/static/js/main.652b0d90.chunk.js",
+    "main.js.map": "/litness/static/js/main.652b0d90.chunk.js.map",
     "runtime-main.js": "/litness/static/js/runtime-main.199f128c.js",
     "runtime-main.js.map": "/litness/static/js/runtime-main.199f128c.js.map",
-    "static/js/2.dfb819eb.chunk.js": "/litness/static/js/2.dfb819eb.chunk.js",
-    "static/js/2.dfb819eb.chunk.js.map": "/litness/static/js/2.dfb819eb.chunk.js.map",
+    "static/js/2.f60267f8.chunk.js": "/litness/static/js/2.f60267f8.chunk.js",
+    "static/js/2.f60267f8.chunk.js.map": "/litness/static/js/2.f60267f8.chunk.js.map",
     "static/js/3.5b44acd6.chunk.js": "/litness/static/js/3.5b44acd6.chunk.js",
     "static/js/3.5b44acd6.chunk.js.map": "/litness/static/js/3.5b44acd6.chunk.js.map",
     "index.html": "/litness/index.html",
-    "static/css/main.93ec6d93.chunk.css.map": "/litness/static/css/main.93ec6d93.chunk.css.map",
-    "static/js/2.dfb819eb.chunk.js.LICENSE.txt": "/litness/static/js/2.dfb819eb.chunk.js.LICENSE.txt",
+    "static/css/main.5034fd99.chunk.css.map": "/litness/static/css/main.5034fd99.chunk.css.map",
+    "static/js/2.f60267f8.chunk.js.LICENSE.txt": "/litness/static/js/2.f60267f8.chunk.js.LICENSE.txt",
     "static/media/caret.bfd98d54.svg": "/litness/static/media/caret.bfd98d54.svg",
     "static/media/checkmark.1d073034.svg": "/litness/static/media/checkmark.1d073034.svg",
     "static/media/fire.4fa412f3.png": "/litness/static/media/fire.4fa412f3.png",
+    "static/media/location.fe81c3c0.png": "/litness/static/media/location.fe81c3c0.png",
     "static/media/pen.27ec406e.svg": "/litness/static/media/pen.27ec406e.svg",
     "static/media/pin.c45e97d1.png": "/litness/static/media/pin.c45e97d1.png",
     "static/media/user.9e5ca7c8.png": "/litness/static/media/user.9e5ca7c8.png"
   },
   "entrypoints": [
     "static/js/runtime-main.199f128c.js",
-    "static/js/2.dfb819eb.chunk.js",
-    "static/css/main.93ec6d93.chunk.css",
-    "static/js/main.3c361186.chunk.js"
+    "static/js/2.f60267f8.chunk.js",
+    "static/css/main.5034fd99.chunk.css",
+    "static/js/main.652b0d90.chunk.js"
   ]
 }
