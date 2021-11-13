@@ -6,22 +6,16 @@ import OlVectorLayer from 'ol/layer/Vector';
 import OlVectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import OSM from 'ol/source/OSM';
-import {Fill, Style} from 'ol/style';
+import {Style} from 'ol/style';
+import IconStyle from 'ol/style/Icon';
 import {fromLonLat} from 'ol/proj';
 import { useEffect, useRef, useState } from "react";
-import CircleStyle from "ol/style/Circle";
+import { location } from "../img";
 
 const style = (feature: any) => new Style ({
-  image: new CircleStyle ({
-    radius: parseInt (feature.get ('litness')) * 2,
-    fill: new Fill ({
-      color: [
-        255,
-        0,
-        0,
-        parseInt (feature.get ('litness')) / 25
-      ]
-    })
+  image: new IconStyle ({
+    src: location,
+    scale: 0.02 + parseInt (feature.get ('litness')) * 0.01,
   })
 })
 
@@ -29,7 +23,7 @@ export default function Map () {
   const app = useApp ();
   const mapref = useRef<HTMLDivElement> (null);
   const [map, setMap] = useState<OlMap | null> (null);
-  const [zoom, setZoom] = useState <number> (15);
+  const [zoom] = useState <number> (15);
   const [center, setCenter] = useState<number[] | null> (null);
 
   useEffect (() => {

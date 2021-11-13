@@ -21,7 +21,7 @@ interface AnswerFunction {
   (answer: string): void;
 }
 
-interface UserDetail {
+export interface UserDetail {
   attributeName: string;
   attributeValue: string;
   dateCreated: number;

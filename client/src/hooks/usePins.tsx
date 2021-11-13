@@ -132,8 +132,8 @@ export default function usePins (user: UserHook, location: LocationHook, freeze:
   })
 
   useEffect (() => {
-    if (location.coords.lng && location.coords.lat) getPins ();
-  }, [location.coords.lng, location.coords.lat]);
+    if (location.locationAvailable) getPins ();
+  }, [location.locationAvailable]);
   
   return {
     iter,

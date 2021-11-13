@@ -65,7 +65,7 @@
 .profile section label {
   grid-area: label;
 }
-.profile section input, .profile p {
+.profile section input, .profile section p {
   grid-area: value;
   margin: 0;
 }

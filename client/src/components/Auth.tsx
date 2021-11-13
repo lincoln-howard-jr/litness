@@ -49,6 +49,11 @@ export default function Auth () {
         </header>
         <UserDetail name="Nickname" label="What is your nickname?" />
         <UserDetail name="Favorite Place" label="What is your favorite place?" />
+        <header>
+          <span />
+          <h2>Your Friends</h2>
+          <span/>
+        </header>
       </div>
     </div>
   )
